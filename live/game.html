@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="csrf-token" content="ImExOTgyZTdiOTZkYTQwMWUzOGY0N2Y1Mjc2Yzg4NDg3NGZmY2ViNzci.awJotg.8j6H3ev5tsAV_YhssPlPWbI1xGQ"><meta name="theme-color" content="#10110e"><meta name="description" content="Meet Reboot by ALDICOM. Explore our Korean-born jelly and drink collection. Restart your day, your way."><title>Reboot Town — REBOOT / ALDICOM</title><link rel="stylesheet" href="static/core/css/site.css"><script defer src="static/core/js/site.js"></script><link rel="stylesheet" href="static/core/css/game.css"><style>.chat,.chat-toggle,.chat-panel,.site-popup,[data-popup]{display:none!important}
+html.embed .header,html.embed footer,html.embed .game-intro,html.embed .game-guide,html.embed .game-spend,html.embed .skip-link{display:none!important}
+html.embed .page-top{padding-top:24px!important;padding-bottom:24px!important}
+.snap-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#B1FF3B;color:#10110E;font:600 14px/1.4 sans-serif;padding:10px 16px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .2s;pointer-events:none}</style>
+<script>if(/[?&]embed/.test(location.search))document.documentElement.classList.add('embed');document.addEventListener('click',e=>{const a=e.target.closest('[data-offline]');if(!a)return;e.preventDefault();let t=document.querySelector('.snap-toast');if(!t){t=document.createElement('div');t.className='snap-toast';document.body.appendChild(t)}t.textContent='발표용 화면입니다 · 실제 사이트에서 '+a.dataset.offline+' 로 이동';t.style.opacity=1;clearTimeout(t._h);t._h=setTimeout(()=>t.style.opacity=0,1800)},true);
+document.addEventListener('submit',e=>{e.preventDefault()},true);</script></head>
+<body class="lang-en"><a class="skip" href="#main">Skip to content</a><header class="header"><a class="wordmark" href="index.html" aria-label="Reboot home"><img class="logo" src="images/logo/reboot-wordmark.png" alt="Reboot"></a><button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu <span>＋</span></button><nav id="navigation" aria-label="Main navigation"><a href="#" data-offline="/about/story" >About</a><a href="products.html" >Products</a><a href="game.html" aria-current="page">Game</a><a href="#" data-offline="/feed/" >Feed</a><a href="#" data-offline="/where-to-buy/" >Where to Buy</a><a href="#" data-offline="/vibe-test/" >Vibe Test</a></nav><div class="account"><a href="#" data-offline="/auth/login">Login <img class="rebu-arrow" src="static/core/img/rebu-face.png" srcset="static/core/img/rebu-face.png 1x, static/core/img/rebu-face@2x.png 2x" alt="" aria-hidden="true" width="20" height="20" decoding="async"></a></div><form class="language-switch" action="#" data-offline="/language" method="post" aria-label="Language"><input type="hidden" name="csrf_token" value="ImExOTgyZTdiOTZkYTQwMWUzOGY0N2Y1Mjc2Yzg4NDg3NGZmY2ViNzci.awJotg.8j6H3ev5tsAV_YhssPlPWbI1xGQ"><input type="hidden" name="next" value="/game/?"><button name="language" value="ko" aria-pressed="false" lang="ko">한국어</button><button name="language" value="en" aria-pressed="true" lang="en">EN</button></form></header>
+
+<main id="main">
+<section class="section page-top game-page">
+
+  <div class="game-intro">
+    <div>
+      <span class="eyebrow">REBOOT TOWN · 2 VILLAGES · 4 MINI GAMES</span>
+      <h1>PLAY. EARN.<br><span class="neon">RESTART.</span></h1>
+      <p>Walk Rebu through Jelly Village and Drink Village, play mini games, and turn your score into points for the Reboot shop.</p>
+    </div>
+    
+    <aside class="game-today guest">
+      <span>Free to play</span>
+      <strong>Log in to earn</strong>
+      <small>Anyone can play. Only signed-in members turn scores into points — up to 1,000 P a day.</small>
+      <a class="btn primary" href="#" data-offline="/auth/login?next=/game/">Login <img class="rebu-arrow" src="static/core/img/rebu-face.png" srcset="static/core/img/rebu-face.png 1x, static/core/img/rebu-face@2x.png 2x" alt="" aria-hidden="true" width="20" height="20" decoding="async"></a>
+    </aside>
+    
+  </div>
+
+  <div class="game-frame">
+    <div class="game-bar">
+      <button type="button" class="game-chip" data-goto="jelly">◐ Jelly Village</button>
+      <button type="button" class="game-chip" data-goto="drink">◑ Drink Village</button>
+      <button type="button" class="game-chip" id="game-back" hidden>← Back to town</button>
+      <span class="game-bar-space"></span>
+      <button type="button" class="game-chip" id="game-sound" aria-pressed="true">♪ Sound on</button>
+    </div>
+    <div class="game-stage" id="game-stage" tabindex="0" aria-label="Reboot Town game. Arrow keys or WASD to walk, E to enter a building, Space or click to play, Escape to go back.">
+      <canvas id="game-canvas" width="480" height="270"></canvas>
+      <div class="game-hint" id="game-hint" hidden>Click to focus the game</div>
+
+      <div class="game-overlay" id="game-result" hidden role="dialog" aria-labelledby="game-result-title">
+        <div class="game-card">
+          <span class="eyebrow" id="game-result-place"></span>
+          <h2 id="game-result-title">GAME OVER</h2>
+          <p class="game-score"><strong id="game-result-score">0</strong> <span id="game-result-unit"></span></p>
+          <p class="game-best" id="game-result-best"></p>
+          <p class="game-points" id="game-result-points" role="status" aria-live="polite"></p>
+          <div class="game-actions">
+            <button type="button" class="btn primary" id="game-retry">Play again ↻</button>
+            <button type="button" class="btn" id="game-home">Back to town</button>
+            <a class="btn" id="game-login" hidden href="#" data-offline="/auth/login?next=/game/">Login to earn <img class="rebu-arrow" src="static/core/img/rebu-face.png" srcset="static/core/img/rebu-face.png 1x, static/core/img/rebu-face@2x.png 2x" alt="" aria-hidden="true" width="20" height="20" decoding="async"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-overlay" id="game-store" hidden role="dialog" aria-labelledby="game-store-title">
+        <div class="game-card wide">
+          <button type="button" class="game-x" id="game-store-close" aria-label="Close">✕</button>
+          <span class="eyebrow" id="game-store-eyebrow"></span>
+          <h2 id="game-store-title"></h2>
+          <p class="muted" id="game-store-note"></p>
+          <div class="game-store-grid" id="game-store-grid"></div>
+        </div>
+      </div>
+    </div>
+    <p class="game-keys"><kbd>← ↑ ↓ →</kbd> / <kbd>WASD</kbd> walk · <kbd>E</kbd> enter · <kbd>Space</kbd> / click play · <kbd>Esc</kbd> back to town · On a phone, tap where you want to go.</p>
+  </div>
+<script type="application/json" id="game-data">{"dailyCap": 1000, "games": {"bottle-pop": {"max_rate": 4.0, "max_score": 200, "min_seconds": 28, "name": "Bottle Pop", "per": 1, "points": 5, "rule": "1 pt = 5 P", "slack": 6, "unit": "pts", "village": "drink"}, "jelly-drop": {"max_rate": 7.0, "max_score": 3000, "min_seconds": 0, "name": "Jelly Drop", "per": 1, "points": 3, "rule": "1 pt = 3 P", "slack": 10, "unit": "pts", "village": "jelly"}, "lasso-leap": {"max_rate": 2.0, "max_score": 600, "min_seconds": 0, "name": "Lasso Leap", "per": 1, "points": 10, "rule": "1 gate = 10 P", "slack": 3, "unit": "gates", "village": "jelly"}, "sunrise-flight": {"max_rate": 22.0, "max_score": 60000, "min_seconds": 0, "name": "Sunrise Flight", "per": 5, "points": 1, "rule": "5 m = 1 P", "slack": 60, "unit": "m", "village": "drink"}}, "loginUrl": "/auth/login?next=/game/", "pointsPerUsd": 100, "products": [{"balance": false, "flavors": ["Lime", "Lemon", "Cherry"], "image": "images/product_image/web/cutout/jelly-original-package.webp", "line": "Jelly", "name": "Reboot Jelly Original", "options": [{"label": "1 Package \u00b7 Lime, Lemon \u0026 Cherry", "price": 17.99}], "slug": "jelly-original"}, {"balance": true, "flavors": ["Cherry", "Lime", "Lemon"], "image": "images/product_image/web/cutout/jelly-balance-package.webp", "line": "Jelly", "name": "Reboot Jelly Balance", "options": [{"label": "1 Package \u00b7 Lime, Lemon \u0026 Cherry", "price": 19.99}], "slug": "jelly-balance"}, {"balance": false, "flavors": ["Lemon", "Cherry", "Lime"], "image": "images/product_image/web/drink-original-box3.webp", "line": "Drink", "name": "Reboot Drink Original", "options": [{"label": "Lemon \u00b7 1 Bottle", "price": 4.99}, {"label": "Lime \u00b7 1 Bottle", "price": 4.99}, {"label": "Cherry \u00b7 1 Bottle", "price": 4.99}, {"label": "Mixed Box \u00b7 Lemon, Lime \u0026 Cherry", "price": 12.99}], "slug": "drink-original"}, {"balance": true, "flavors": ["Lemon", "Lime", "Cherry"], "image": "images/product_image/web/drink-balance-box3.webp", "line": "Drink", "name": "Reboot Drink Balance", "options": [{"label": "Lemon \u00b7 1 Bottle", "price": 5.49}, {"label": "Lime \u00b7 1 Bottle", "price": 5.49}, {"label": "Cherry \u00b7 1 Bottle", "price": 5.49}, {"label": "Mixed Box \u00b7 Lemon, Lime \u0026 Cherry", "price": 14.49}], "slug": "drink-balance"}], "role": "guest", "runCap": 300, "status": null}</script>
+</section>
+
+<section class="section game-guide" aria-labelledby="game-guide-title">
+  <div class="section-heading"><h2 id="game-guide-title">FOUR GAMES.<br><span class="neon">ONE DAILY CAP.</span></h2>
+    <p>Every run pays up to 300 P. Together, all games pay up to 1,000 P per day (UTC). 100 P = $1 at checkout.</p></div>
+  <div class="game-cards">
+    
+    <article class="game-info jelly">
+      <span class="eyebrow">Jelly Village</span>
+      <h3>Lasso Leap</h3>
+      <p>Tap to hop Rebu through the lasso gates. Grab boot, hat and lasso jellies for a bonus.</p>
+      <div class="game-info-foot"><b>1 gate = 10 P</b><button type="button" class="btn" data-play="lasso-leap">Play <img class="rebu-arrow" src="static/core/img/rebu-face.png" srcset="static/core/img/rebu-face.png 1x, static/core/img/rebu-face@2x.png 2x" alt="" aria-hidden="true" width="20" height="20" decoding="async"></button></div>
+    </article>
+    
+    <article class="game-info jelly">
+      <span class="eyebrow">Jelly Village</span>
+      <h3>Jelly Drop</h3>
+      <p>Catch falling jellies in the pouch. One boot, one hat and one lasso fill a pack for +5. Dodge the tumbleweeds.</p>
+      <div class="game-info-foot"><b>1 pt = 3 P</b><button type="button" class="btn" data-play="jelly-drop">Play <img class="rebu-arrow" src="static/core/img/rebu-face.png" srcset="static/core/img/rebu-face.png 1x, static/core/img/rebu-face@2x.png 2x" alt="" aria-hidden="true" width="20" height="20" decoding="async"></button></div>
+    </article>
+    
+    <article class="game-info drink">
+      <span class="eyebrow">Drink Village</span>
+      <h3>Bottle Pop</h3>
+      <p>30 seconds behind the bar. Pop only the bottles that match the order. The Mixed Box is worth +3.</p>
+      <div class="game-info-foot"><b>1 pt = 5 P</b><button type="button" class="btn" data-play="bottle-pop">Play <img class="rebu-arrow" src="static/core/img/rebu-face.png" srcset="static/core/img/rebu-face.png 1x, static/core/img/rebu-face@2x.png 2x" alt="" aria-hidden="true" width="20" height="20" decoding="async"></button></div>
+    </article>
+    
+    <article class="game-info drink">
+      <span class="eyebrow">Drink Village</span>
+      <h3>Sunrise Flight</h3>
+      <p>Hold to rise in the balloon, release to drift down. Fly from midnight to sunrise and collect flavor drops.</p>
+      <div class="game-info-foot"><b>5 m = 1 P</b><button type="button" class="btn" data-play="sunrise-flight">Play <img class="rebu-arrow" src="static/core/img/rebu-face.png" srcset="static/core/img/rebu-face.png 1x, static/core/img/rebu-face@2x.png 2x" alt="" aria-hidden="true" width="20" height="20" decoding="async"></button></div>
+    </article>
+    
+  </div>
+</section>
+
+<section class="section game-spend" aria-labelledby="game-spend-title">
+  <div class="section-heading"><h2 id="game-spend-title">SPEND YOUR<br><span class="neon">POINTS.</span></h2>
+    <p>Use points at checkout on any Reboot item. Jellies are sold only as line packages with all three shapes: lime boot, lemon lasso and cherry hat.</p></div>
+  <div class="game-products">
+    
+    
+    <a class="game-product" href="jelly-original.html">
+      <div class="game-product-art jelly"><img src="images/product_image/web/cutout/jelly-original-package.webp" alt="Reboot Jelly Original" loading="lazy"></div>
+      <span class="eyebrow">Jelly</span>
+      <h3>Reboot Jelly Original</h3>
+      <p>Line package $17.99 <b>= 1,799 P</b></p>
+    </a>
+    
+    
+    <a class="game-product" href="jelly-balance.html">
+      <div class="game-product-art jelly"><img src="images/product_image/web/cutout/jelly-balance-package.webp" alt="Reboot Jelly Balance" loading="lazy"></div>
+      <span class="eyebrow">Jelly · Zero Sugar</span>
+      <h3>Reboot Jelly Balance</h3>
+      <p>Line package $19.99 <b>= 1,999 P</b></p>
+    </a>
+    
+    
+    <a class="game-product" href="drink-original.html">
+      <div class="game-product-art drink"><img src="images/product_image/web/drink-original-box3.webp" alt="Reboot Drink Original" loading="lazy"></div>
+      <span class="eyebrow">Drink</span>
+      <h3>Reboot Drink Original</h3>
+      <p>From $4.99 <b>= 499 P</b></p>
+    </a>
+    
+    
+    <a class="game-product" href="drink-balance.html">
+      <div class="game-product-art drink"><img src="images/product_image/web/drink-balance-box3.webp" alt="Reboot Drink Balance" loading="lazy"></div>
+      <span class="eyebrow">Drink · Zero Sugar</span>
+      <h3>Reboot Drink Balance</h3>
+      <p>From $5.49 <b>= 549 P</b></p>
+    </a>
+    
+  </div>
+  <ul class="game-fine">
+    <li>Scores are checked on our server. Impossible scores earn 0 P.</li>
+    <li>Points are for signed-in members (21+). Guests can play for fun.</li>
+    <li>The shop is a mock checkout with no real payment.</li>
+  </ul>
+</section>
+</main><footer><div class="footer-top"><div><span class="eyebrow">GOOD NIGHTS. NEW DAYS.</span><h2>LET’S DO<br><span class="neon">TOMORROW.</span></h2></div><a class="circle-link" href="products.html" aria-label="Explore products"><img class="rebu-arrow" src="static/core/img/rebu-face.png" srcset="static/core/img/rebu-face.png 1x, static/core/img/rebu-face@2x.png 2x" alt="" aria-hidden="true" width="20" height="20" decoding="async"></a></div><div class="footer-links"><a class="wordmark" href="index.html"><img class="logo" src="images/logo/reboot-wordmark.png" alt="Reboot"></a><div><a href="#" data-offline="/about/story">Our story</a><a href="#" data-offline="/contact/">Contact</a><a href="#" data-offline="/creators/">Creators</a></div><div><a href="#" data-offline="/legal/#privacy">Privacy</a><a href="#" data-offline="/legal/#terms">Terms</a><a href="#" data-offline="/legal/#cookies">Cookies</a></div><span class="eyebrow">BY ALDICOM<br>SEOUL, KOREA</span></div><div class="fineprint"><span>© 2026 ALDICOM. REBOOT US.</span><span>For adults 21+. Mock checkout only.</span><span>SEOUL → EVERYWHERE</span></div></footer>
+<div class="chat" data-chat data-greeting="Howdy! I’m Rebu from Reboot customer care. Ask me about products, flavors, points, orders, or where to buy." data-thinking="Typing…" data-error="Sorry, something went wrong. Please try again or use the contact form." data-unavailable="Chat is not available right now. Please use the contact form." data-limit="You’ve sent a lot of messages. Please wait a few minutes."><section class="chat-panel" id="chat-panel" hidden aria-label="Customer support chat"><header><strong>REBOOT SUPPORT</strong><button type="button" data-chat-close aria-label="Close chat">✕</button></header><div class="chat-log" aria-live="polite"></div><form><input maxlength="1000" autocomplete="off" required aria-label="Your message" placeholder="Type your question…"><button class="btn primary" type="submit">Send</button></form><p class="chat-note">AI answers may be inaccurate. <a href="#" data-offline="/contact/">Order help → Contact form</a></p></section><button class="chat-toggle" type="button" aria-expanded="false" aria-controls="chat-panel"><span aria-hidden="true">✳</span> Ask Reboot</button></div><script defer src="static/core/js/chat.js"></script><script defer src="static/core/js/game.js"></script></body></html>
